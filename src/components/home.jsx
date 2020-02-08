@@ -4,6 +4,7 @@ import HourlyEvents from "./hourlyEvents";
 import HourlyStats from "./hourlyStats.jsx";
 import DailyStats from "./dailyStats";
 import Poi from "./poi";
+import Tabs from "./common/tabs";
 import { formatDate } from "../utils/formatDate";
 
 class Home extends Component {
@@ -14,7 +15,8 @@ class Home extends Component {
     hourlyEvents: [],
     dailyStats: [],
     hourlyStats: [],
-    poi: []
+    poi: [],
+    sections: ["Charts", "Tables", "Maps"]
   };
 
   componentDidMount() {
@@ -120,12 +122,14 @@ class Home extends Component {
       hourlyEvents,
       hourlyStats,
       dailyStats,
-      poi
+      poi,
+      sections
     } = this.state;
     return (
       <React.Fragment>
         <div id="container" style={{ width: "100%", height: 400 }}>
           <div className="row">
+            <Tabs sections={sections} />
             <div className="col-md">
               <DailyEvents data={dailyEvents} />
             </div>
