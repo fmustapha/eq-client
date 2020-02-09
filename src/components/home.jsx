@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-import DailyEvents from "./dailyEvents";
-import HourlyEvents from "./hourlyEvents";
-import HourlyStats from "./hourlyStats.jsx";
-import DailyStats from "./dailyStats";
-import Poi from "./poi";
+import { Route } from "react-router-dom";
+import Charts from "./charts";
+import Maps from "./maps";
+import Tables from "./tables";
 import Tabs from "./common/tabs";
 import { formatDate } from "../utils/formatDate";
 
@@ -116,6 +115,12 @@ class Home extends Component {
       });
   };
 
+  handleSelect = item => {
+    this.setState({
+      selectedSection: item
+    });
+  };
+
   render() {
     const {
       dailyEvents,
@@ -123,37 +128,32 @@ class Home extends Component {
       hourlyStats,
       dailyStats,
       poi,
+      selectedSection,
       sections
     } = this.state;
     return (
       <React.Fragment>
         <div id="container" style={{ width: "100%", height: 400 }}>
-          <div className="row">
-            <Tabs sections={sections} />
-            <div className="col-md">
-              <DailyEvents data={dailyEvents} />
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md">
-              <HourlyEvents data={hourlyEvents} />
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md">
-              <HourlyStats data={hourlyStats} />
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md">
-              <DailyStats data={dailyStats} />
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md">
-              <Poi data={poi} />
-            </div>
-          </div>
+          <Tabs
+            selectedSection={selectedSection}
+            sections={sections}
+          />
+          <Route path="/home/maps" component={Maps} />
+          <Route path="/home/Tables" component={Tables} />
+          <Route
+            path="/home/charts"
+            render={props => (
+              <Charts
+                dailyEvents={dailyEvents}
+                hourlyEvents={hourlyEvents}
+                hourlyStats={hourlyStats}
+                dailyStats={dailyStats}
+                poi={poi}
+                {...props}
+              />
+              
+            )}
+          />
         </div>
       </React.Fragment>
     );

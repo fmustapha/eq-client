@@ -1,16 +1,19 @@
 import React from "react";
-import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
-const Tabs = ({ selectedItem, onGenreSelect, sections }) => {
+const Tabs = ({ selectedSection, sections }) => {
   return (
     <ul className="nav nav-tabs">
       {sections.map((section, index) => (
-        <li className="nav-item" key={index}>
-          <a key={index} className="nav-link active" href="#">
-            {section}
-          </a>
+        <li
+          className="nav-item"
+          key={index}
+        >
+          <Link className={
+            selectedSection === section ? `nav-link active` : `nav-link`
+          } to={`/home/${section.toLowerCase()}`}>{section}</Link>
         </li>
-      ))}
+      )) }
     </ul>
   );
 };
