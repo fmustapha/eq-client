@@ -3,11 +3,9 @@ import DailyEvents from "./dailyEvents";
 import HourlyEvents from "./hourlyEvents";
 import HourlyStats from "./hourlyStats.jsx";
 import DailyStats from "./dailyStats";
-import Poi from "./poi";
-
 
 const Charts = (props) => {
-  const { dailyEvents, hourlyEvents, hourlyStats, dailyStats, poi } = props;
+  const { dailyEvents, hourlyEvents, hourlyStats, dailyStats } = props;
   return (
     <React.Fragment>
       <div className="row">
@@ -28,11 +26,6 @@ const Charts = (props) => {
       <div className="row">
         <div className="col-md">
           <DailyStats data={dailyStats} />
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-md">
-          <Poi data={poi} />
         </div>
       </div>
     </React.Fragment>

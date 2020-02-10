@@ -1,9 +1,12 @@
 import React from "react";
+import Poi from "./poi";
 
-const Maps = () => {
+const Maps = props => {
+  console.log(props);
   return (
     <div className="content">
       <h1>Maps</h1>
+      <Poi poi={props.poi} />
     </div>
   );
 };
