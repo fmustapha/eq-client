@@ -1,47 +1,67 @@
 import React, { Component } from "react";
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ReferenceLine
-} from "recharts";
-import { Map, Marker, GoogleApiWrapper } from "google-maps-react";
+import { Map, Marker, GoogleApiWrapper, InfoWindow } from "google-maps-react";
 
 class Poi extends Component {
-  state = { poi: [] };
+  state = {
+    poi: [],
+    showingInfoWindow: false,
+    activeMarker: {},
+    selectedPlace: {}
+  };
 
   componentDidMount() {
     const { poi, loaded } = this.props;
-      this.setPoi({ poi, loaded });
+    this.setPoi({ poi, loaded, displayToolTip: false });
   }
 
   componentDidUpdate(prevProps) {
     const { poi, loaded } = this.props;
-    if (poi && prevProps.poi.length < this.props.poi.length) this.setPoi({ poi, loaded });
+    if (poi && prevProps.poi.length < this.props.poi.length)
+      this.setPoi({ poi, loaded, displayToolTip: false });
   }
 
   setPoi = ({ poi, loaded }) => {
     this.setState({ poi, loaded });
   };
 
-  generatePoiMarkers() {
+  handleClick = e => {
+    this.setState({
+      displayToolTip: true
+    });
+  };
+
+  onMouseEnter = (props, marker, e) =>
+    this.setState({
+      selectedPlace: props,
+      activeMarker: marker,
+      showingInfoWindow: true
+    });
+
+    onMouseExit = (props, marker, e) =>
+    this.setState({
+      selectedPlace: props,
+      activeMarker: marker,
+      showingInfoWindow: false
+    });
+
+  generatePoiMarkers = () => {
     const { poi } = this.state;
     if (poi.length > 0) {
       return this.state.poi.map(p => {
-        return <Marker
-          key={p.poi_id}
-          id={p.poi_id}
-          name={p.name}
-          position={{ lat: p.lat, lng: p.lon }}
-          onClick={()=> console.log(`You clicked ${p.name}`)}
-        />
+        return (
+          <Marker
+            key={p.poi_id}
+            id={p.poi_id}
+            name={p.name}
+            position={{ lat: p.lat, lng: p.lon }}
+            onMouseover={this.onMouseEnter}
+            onMouseout={this.onMouseExit}
+          ></Marker>
+        );
       });
-    } else return <p>'The map is currently unavailable! Please try again later'</p>
-  }
+    } else
+      return <p>'The map is currently unavailable! Please try again later'</p>;
+  };
 
   styles = {
     width: "60%",
@@ -58,41 +78,19 @@ class Poi extends Component {
         initialCenter={{ lat: 43.6708, lng: -79.3899 }}
       >
         {this.generatePoiMarkers()}
+        <InfoWindow
+          marker={this.state.activeMarker}
+          visible={this.state.showingInfoWindow}>
+            <div>
+              <h5>{this.state.selectedPlace.name}</h5>
+            </div>
+        </InfoWindow>
       </Map>
     ) : (
       <p>Loading Map...</p>
     );
   }
 }
-
-// const Poi = (props) => {
-//   return (
-//     // <BarChart
-//     //     width={900}
-//     //     height={300}
-//     //     data={data}
-//     //     margin={{
-//     //       top: 5, right: 30, left: 20, bottom: 5,
-//     //     }}
-//     //   >
-//     //     <CartesianGrid strokeDasharray="3 3" />
-//     //     <XAxis dataKey="name" />
-//     //     <YAxis />
-//     //     <Tooltip />
-//     //     <Legend />
-//     //     <ReferenceLine y={0} stroke="#000" />
-//     //     <Bar dataKey="lat" fill="#8884d8" />
-//     //     <Bar dataKey="lon" fill="#82ca9d" />
-//     //   </BarChart>
-//     <Map
-//           google={this.props.google}
-//           zoom={8}
-//           style={styles}
-//           initialCenter={{ lat: 47.444, lng: -122.176}}
-//         />
-//    );
-// }
-
 export default GoogleApiWrapper({
   apiKey: process.env.REACT_APP_KEY
 })(Poi);

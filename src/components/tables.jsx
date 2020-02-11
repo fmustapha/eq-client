@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-// import Table from "./common/table";
+import Pagination from './common/pagination';
 
 class Tables extends Component {
   state = {
@@ -12,21 +12,22 @@ class Tables extends Component {
   }
 
   render() {
-    const { poiDetails } = this.props;
+    const { poiDetails, pagination:{totalCount, currentPage, pageSize }, onPageChange} = this.props;
 
     return (
+      <div className="row">
       <table className="table">
+      <caption>Pois statistics and Event Details</caption>
         <thead>
             <tr>
               <th>Name</th>
               <th>Lat</th>
               <th>Lon</th>
               <th>Date</th>
-              <th>Hour</th>
+              <th>Events</th>
               <th>Impressions</th>
               <th>Clicks</th>
               <th>Revenue</th>
-              <th>Events</th>
             </tr>
         </thead>
         <tbody>
@@ -36,15 +37,21 @@ class Tables extends Component {
               <td>{data.lat}</td>
               <td>{data.lon}</td>
               <td>{data.date}</td>
-              <td>{data.hour}</td>
+              <td>{data.events}</td>
               <td>{data.impressions}</td>
               <td>{data.clicks}</td>
               <td>{data.revenue}</td>
-              <td>{data.events}</td>
             </tr>
           ))}
         </tbody>
       </table>
+      <Pagination
+            pageCount={totalCount}
+            pageSize={pageSize}
+            currentPage={currentPage}
+            onPageChange={onPageChange}
+      />
+      </div>
     );
   }
 }

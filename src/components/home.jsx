@@ -5,6 +5,8 @@ import Maps from "./maps";
 import Tables from "./tables";
 import Tabs from "./common/tabs";
 import { formatDate } from "../utils/formatDate";
+import Pagination from "./common/pagination";
+import { paginate } from "../utils/paginate";
 
 class Home extends Component {
   state = {
@@ -16,7 +18,9 @@ class Home extends Component {
     hourlyStats: [],
     poiDetails: [],
     poi: [],
-    sections: ["Charts", "Tables", "Maps"]
+    sections: ["Charts", "Tables", "Maps"],
+    currentPage: 1,
+    pageSize: 10
   };
 
   componentDidMount() {
@@ -134,11 +138,22 @@ class Home extends Component {
         });
       });
   };
+  //Page Event handler
+  handlePageChange = page => {
+    this.setState({ currentPage: page });
+  };
 
   handleSelect = item => {
     this.setState({
       selectedSection: item
     });
+  };
+
+  getPaginatedData = () => {
+    const { poiDetails, pageSize, currentPage } = this.state;
+
+    const paginated = paginate(poiDetails, currentPage, pageSize);
+    return { totalCount: poiDetails.length, poiDetails: paginated };
   };
 
   render() {
@@ -149,20 +164,32 @@ class Home extends Component {
       dailyStats,
       poi,
       poiDetails,
+      currentPage,
+      pageSize,
       selectedSection,
       sections
     } = this.state;
+    const { totalCount, poiDetails: details } = this.getPaginatedData();
     return (
       <React.Fragment>
         <div id="container" style={{ width: "100%", height: 400 }}>
           <Tabs selectedSection={selectedSection} sections={sections} />
           <Route
             path="/home/maps"
-            render={props => <Maps poi={poi} {...props} />}
+            render={props => (
+              <Maps poi={poi} onMapClick={this.handleMapClick} {...props} />
+            )}
           />
           <Route
             path="/home/tables"
-            render={props => <Tables poiDetails={poiDetails} {...props} />}
+            render={props => (
+              <Tables
+                poiDetails={details}
+                pagination={{ currentPage, pageSize, totalCount }}
+                onPageChange={this.handlePageChange}
+                {...props}
+              />
+            )}
           />
           <Route
             path="/home/charts"
@@ -172,6 +199,7 @@ class Home extends Component {
                 hourlyEvents={hourlyEvents}
                 hourlyStats={hourlyStats}
                 dailyStats={dailyStats}
+                poi={poi}
                 {...props}
               />
             )}
