@@ -5,8 +5,6 @@ import Maps from "./maps";
 import Tables from "./tables";
 import Tabs from "./common/tabs";
 import { formatDate } from "../utils/formatDate";
-import Pagination from "./common/pagination";
-import { paginate } from "../utils/paginate";
 
 class Home extends Component {
   state = {
@@ -19,8 +17,7 @@ class Home extends Component {
     poiDetails: [],
     poi: [],
     sections: ["Charts", "Tables", "Maps"],
-    currentPage: 1,
-    pageSize: 10
+    
   };
 
   componentDidMount() {
@@ -138,22 +135,11 @@ class Home extends Component {
         });
       });
   };
-  //Page Event handler
-  handlePageChange = page => {
-    this.setState({ currentPage: page });
-  };
 
   handleSelect = item => {
     this.setState({
       selectedSection: item
     });
-  };
-
-  getPaginatedData = () => {
-    const { poiDetails, pageSize, currentPage } = this.state;
-
-    const paginated = paginate(poiDetails, currentPage, pageSize);
-    return { totalCount: poiDetails.length, poiDetails: paginated };
   };
 
   render() {
@@ -163,12 +149,10 @@ class Home extends Component {
       hourlyStats,
       dailyStats,
       poi,
-      currentPage,
-      pageSize,
+      poiDetails,
       selectedSection,
       sections
     } = this.state;
-    const { totalCount, poiDetails: details } = this.getPaginatedData();
     return (
       <React.Fragment>
         <div id="container" style={{ width: "100%", height: 400 }}>
@@ -183,8 +167,7 @@ class Home extends Component {
             path="/home/tables"
             render={props => (
               <Tables
-                poiDetails={details}
-                pagination={{ currentPage, pageSize, totalCount }}
+                poiDetails={poiDetails}
                 onPageChange={this.handlePageChange}
                 {...props}
               />
