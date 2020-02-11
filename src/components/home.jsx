@@ -163,7 +163,6 @@ class Home extends Component {
       hourlyStats,
       dailyStats,
       poi,
-      poiDetails,
       currentPage,
       pageSize,
       selectedSection,
