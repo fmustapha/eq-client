@@ -14,8 +14,10 @@ class Home extends Component {
     hourlyEvents: [],
     dailyStats: [],
     hourlyStats: [],
+    poiDetails: [],
     poi: [],
-    sections: ["Charts", "Tables", "Maps"]
+    sections: ["Charts", "Tables", "Maps"],
+    
   };
 
   componentDidMount() {
@@ -24,6 +26,7 @@ class Home extends Component {
     this.loadHourlyStats();
     this.loadDailyStats();
     this.loadPoi();
+    this.loadPoiDetails();
   }
 
   loadDailyEvents = () => {
@@ -115,6 +118,24 @@ class Home extends Component {
       });
   };
 
+  loadPoiDetails = () => {
+    fetch("/poi/details")
+      .then(res => res.json())
+      .then(result => {
+        const data = formatDate(result);
+        this.setState({
+          poiDetails: data,
+          isLoaded: true
+        });
+      })
+      .catch(error => {
+        this.setState({
+          isLoaded: true,
+          error
+        });
+      });
+  };
+
   handleSelect = item => {
     this.setState({
       selectedSection: item
@@ -128,18 +149,31 @@ class Home extends Component {
       hourlyStats,
       dailyStats,
       poi,
+      poiDetails,
       selectedSection,
       sections
     } = this.state;
     return (
       <React.Fragment>
-        <div id="container" style={{ width: "100%", height: 400 }}>
-          <Tabs
-            selectedSection={selectedSection}
-            sections={sections}
+        <div id="container" style={{ width: "100%", height: "100%" }}>
+          <Tabs selectedSection={selectedSection} sections={sections} onSelect={this.handleSelect}/>
+          <div id="content">
+          <Route
+            path="/home/maps"
+            render={props => (
+              <Maps poi={poi} onMapClick={this.handleMapClick} {...props} />
+            )}
           />
-          <Route path="/home/maps" component={Maps} />
-          <Route path="/home/Tables" component={Tables} />
+          <Route
+            path="/home/tables"
+            render={props => (
+              <Tables
+                poiDetails={poiDetails}
+                onPageChange={this.handlePageChange}
+                {...props}
+              />
+            )}
+          />
           <Route
             path="/home/charts"
             render={props => (
@@ -151,9 +185,9 @@ class Home extends Component {
                 poi={poi}
                 {...props}
               />
-              
             )}
           />
+          </div>
         </div>
       </React.Fragment>
     );

@@ -7,8 +7,12 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "bootstrap": "^4.4.1",
+    "google-maps-react": "^2.0.2",
+    "prop-types": "^15.7.2",
     "react": "^16.12.0",
+    "react-bootstrap": "^1.0.0-beta.16",
     "react-dom": "^16.12.0",
+    "react-google-charts": "^3.0.15",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.3.1",
     "recharts": "^2.0.0-beta.1"
@@ -19,7 +23,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "proxy": "http://localhost:5555",
+  "proxy": "https://eq-back.herokuapp.com/",
   "eslintConfig": {
     "extends": "react-app"
   },

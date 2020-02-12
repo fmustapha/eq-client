@@ -6,7 +6,7 @@ import {
 const HourlyEvents = ({data}) => {
   return (
     <BarChart
-        width={900}
+        width={500}
         height={300}
         data={data}
         margin={{

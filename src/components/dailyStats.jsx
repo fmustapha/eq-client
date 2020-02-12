@@ -11,7 +11,7 @@ import {
 
 const DailyStats = ({ data }) => (
   <BarChart
-    width={900}
+    width={450}
     height={300}
     data={data}
     margin={{
