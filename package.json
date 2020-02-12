@@ -23,14 +23,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "proxy": {
-    "/api": {
-      "target": "https://eq-back.herokuapp.com/",
-      "pathRewrite": {
-        "^/api": "/"
-      }
-    }
-  },
+  "proxy": "https://eq-back.herokuapp.com/",
   "browserslist": {
     "production": [
       ">0.2%",

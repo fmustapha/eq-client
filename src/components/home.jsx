@@ -16,8 +16,7 @@ class Home extends Component {
     hourlyStats: [],
     poiDetails: [],
     poi: [],
-    sections: ["Charts", "Tables", "Maps"],
-    
+    sections: ["Charts", "Tables", "Maps"]
   };
 
   componentDidMount() {
@@ -30,7 +29,7 @@ class Home extends Component {
   }
 
   loadDailyEvents = () => {
-    fetch("/api/events/daily")
+    fetch("/events/daily")
       .then(res => res.json())
       .then(result => {
         const data = formatDate(result);
@@ -48,7 +47,7 @@ class Home extends Component {
   };
 
   loadHourlyEvents = () => {
-    fetch("/api/events/hourly")
+    fetch("/events/hourly")
       .then(res => res.json())
       .then(result => {
         const data = formatDate(result);
@@ -66,7 +65,7 @@ class Home extends Component {
   };
 
   loadHourlyStats = () => {
-    fetch("/api/stats/hourly")
+    fetch("/stats/hourly")
       .then(res => res.json())
       .then(result => {
         const data = formatDate(result);
@@ -84,7 +83,7 @@ class Home extends Component {
   };
 
   loadDailyStats = () => {
-    fetch("/api/stats/daily")
+    fetch("/stats/daily")
       .then(res => res.json())
       .then(result => {
         const data = formatDate(result);
@@ -102,7 +101,7 @@ class Home extends Component {
   };
 
   loadPoi = () => {
-    fetch("/api/poi")
+    fetch("/poi")
       .then(res => res.json())
       .then(result => {
         this.setState({
@@ -119,7 +118,7 @@ class Home extends Component {
   };
 
   loadPoiDetails = () => {
-    fetch("/api/poi/details")
+    fetch("/poi/details")
       .then(res => res.json())
       .then(result => {
         const data = formatDate(result);
@@ -156,37 +155,41 @@ class Home extends Component {
     return (
       <React.Fragment>
         <div id="container" style={{ width: "100%", height: "100%" }}>
-          <Tabs selectedSection={selectedSection} sections={sections} onSelect={this.handleSelect}/>
+          <Tabs
+            selectedSection={selectedSection}
+            sections={sections}
+            onSelect={this.handleSelect}
+          />
           <div id="content">
-          <Route
-            path="/home/maps"
-            render={props => (
-              <Maps poi={poi} onMapClick={this.handleMapClick} {...props} />
-            )}
-          />
-          <Route
-            path="/home/tables"
-            render={props => (
-              <Tables
-                poiDetails={poiDetails}
-                onPageChange={this.handlePageChange}
-                {...props}
-              />
-            )}
-          />
-          <Route
-            path="/home/charts"
-            render={props => (
-              <Charts
-                dailyEvents={dailyEvents}
-                hourlyEvents={hourlyEvents}
-                hourlyStats={hourlyStats}
-                dailyStats={dailyStats}
-                poi={poi}
-                {...props}
-              />
-            )}
-          />
+            <Route
+              path="/home/maps"
+              render={props => (
+                <Maps poi={poi} onMapClick={this.handleMapClick} {...props} />
+              )}
+            />
+            <Route
+              path="/home/tables"
+              render={props => (
+                <Tables
+                  poiDetails={poiDetails}
+                  onPageChange={this.handlePageChange}
+                  {...props}
+                />
+              )}
+            />
+            <Route
+              path="/home/charts"
+              render={props => (
+                <Charts
+                  dailyEvents={dailyEvents}
+                  hourlyEvents={hourlyEvents}
+                  hourlyStats={hourlyStats}
+                  dailyStats={dailyStats}
+                  poi={poi}
+                  {...props}
+                />
+              )}
+            />
           </div>
         </div>
       </React.Fragment>
