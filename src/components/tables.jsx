@@ -102,6 +102,7 @@ class Tables extends Component {
           placeholder="Type in a POI name..."
           aria-label="Search"
         ></input>
+        <div className="table-responsive"> 
         <table className="table">
           <caption>Pois statistics and Event Details</caption>
           <thead>
@@ -118,6 +119,7 @@ class Tables extends Component {
             {details && this.renderbody({ details, highlight, search })}
           </tbody>
         </table>
+        </div>
         <Pagination
           pageCount={totalCount}
           pageSize={pageSize}

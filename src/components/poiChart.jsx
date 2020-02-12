@@ -9,8 +9,8 @@ const PoiChart = ({ data }) => {
   return (
     <div style={{ display: "flex", maxWidth: 900 }}>
       <Chart
-        width={"900px"}
-        height={"300px"}
+        width={"100%"}
+        height={"100%"}
         chartType="GeoChart"
         data={formated}
         options={{
