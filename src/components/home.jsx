@@ -48,7 +48,7 @@ class Home extends Component {
   };
 
   loadHourlyEvents = () => {
-    fetch("/events/hourly")
+    fetch("/api/events/hourly")
       .then(res => res.json())
       .then(result => {
         const data = formatDate(result);
@@ -66,7 +66,7 @@ class Home extends Component {
   };
 
   loadHourlyStats = () => {
-    fetch("/stats/hourly")
+    fetch("/api/stats/hourly")
       .then(res => res.json())
       .then(result => {
         const data = formatDate(result);
@@ -84,7 +84,7 @@ class Home extends Component {
   };
 
   loadDailyStats = () => {
-    fetch("/stats/daily")
+    fetch("/api/stats/daily")
       .then(res => res.json())
       .then(result => {
         const data = formatDate(result);
@@ -102,7 +102,7 @@ class Home extends Component {
   };
 
   loadPoi = () => {
-    fetch("/poi")
+    fetch("/api/poi")
       .then(res => res.json())
       .then(result => {
         this.setState({
@@ -119,7 +119,7 @@ class Home extends Component {
   };
 
   loadPoiDetails = () => {
-    fetch("/poi/details")
+    fetch("/api/poi/details")
       .then(res => res.json())
       .then(result => {
         const data = formatDate(result);
