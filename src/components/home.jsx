@@ -30,7 +30,7 @@ class Home extends Component {
   }
 
   loadDailyEvents = () => {
-    fetch("/events/daily")
+    fetch("/api/events/daily")
       .then(res => res.json())
       .then(result => {
         const data = formatDate(result);

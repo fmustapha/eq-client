@@ -23,9 +23,13 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "proxy": "https://eq-back.herokuapp.com/",
-  "eslintConfig": {
-    "extends": "react-app"
+  "proxy": {
+    "/api": {
+      "target": "https://eq-back.herokuapp.com/",
+      "pathRewrite": {
+        "^/api": "/"
+      }
+    }
   },
   "browserslist": {
     "production": [
