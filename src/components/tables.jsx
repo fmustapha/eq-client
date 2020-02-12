@@ -73,8 +73,6 @@ class Tables extends Component {
       return (
         <tr className={`${searchData && data.id ? "hover" : ""}`} key={index}>
           <td>{data.name}</td>
-          <td>{data.lat}</td>
-          <td>{data.lon}</td>
           <td>{data.date}</td>
           <td>{data.events}</td>
           <td>{data.impressions}</td>
@@ -95,7 +93,7 @@ class Tables extends Component {
     const data = { poiDetails, pageSize, currentPage };
     const { totalCount, poiDetails: details } = this.getPaginatedData(data);
     return (
-      <div className="row">
+      <div className="row table">
         <input
           name="search"
           onChange={this.handleSearch}
@@ -109,8 +107,6 @@ class Tables extends Component {
           <thead>
             <tr>
               <th>Name</th>
-              <th>Lat</th>
-              <th>Lon</th>
               <th>Date</th>
               <th>Events</th>
               <th>Impressions</th>

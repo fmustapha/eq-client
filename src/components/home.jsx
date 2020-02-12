@@ -155,8 +155,9 @@ class Home extends Component {
     } = this.state;
     return (
       <React.Fragment>
-        <div id="container" style={{ width: "100%", height: 400 }}>
-          <Tabs selectedSection={selectedSection} sections={sections} />
+        <div id="container" style={{ width: "100%", height: "100%" }}>
+          <Tabs selectedSection={selectedSection} sections={sections} onSelect={this.handleSelect}/>
+          <div id="content">
           <Route
             path="/home/maps"
             render={props => (
@@ -186,6 +187,7 @@ class Home extends Component {
               />
             )}
           />
+          </div>
         </div>
       </React.Fragment>
     );

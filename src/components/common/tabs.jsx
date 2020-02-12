@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Tabs = ({ selectedSection, sections }) => {
+const Tabs = ({ selectedSection, sections, onSelect }) => {
   return (
     <ul className="nav nav-tabs">
       {sections.map((section, index) => (
@@ -11,7 +11,7 @@ const Tabs = ({ selectedSection, sections }) => {
         >
           <Link className={
             selectedSection === section ? `nav-link active` : `nav-link`
-          } to={`/home/${section.toLowerCase()}`}>{section}</Link>
+          } to={`/home/${section.toLowerCase()}`} onClick={()=>{onSelect(section)}}>{section}</Link>
         </li>
       )) }
     </ul>

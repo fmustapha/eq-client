@@ -9,27 +9,28 @@ const Charts = props => {
   const { dailyEvents, hourlyEvents, hourlyStats, dailyStats, poi } = props;
   return (
     <React.Fragment>
-      <div className="col-md">
-        <p>Interesting places in North America and their coordinates (Hover over colors for more information)</p>
+    <div className="row">
+      <div className="col">
+        <h3>Interesting places in North America and their statistics.</h3>
+        <p>
+          (Hover over colors for more information)
+        </p>
         <PoiChart data={poi} />
       </div>
+      </div>
       <div className="row">
-        <div className="col-md">
+        <div className="col">
           <DailyEvents data={dailyEvents} />
         </div>
-      </div>
-      <div className="row">
-        <div className="col-md">
+        <div className="col">
           <HourlyEvents data={hourlyEvents} />
         </div>
-      </div>
-      <div className="row">
-        <div className="col-md">
+        </div>
+        <div className="row">
+        <div className="col">
           <HourlyStats data={hourlyStats} />
         </div>
-      </div>
-      <div className="row">
-        <div className="col-md">
+        <div className="col">
           <DailyStats data={dailyStats} />
         </div>
       </div>
